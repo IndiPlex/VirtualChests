@@ -200,21 +200,11 @@ public class VCManager {
     }
 
     public void save() {
-        File f = VCMain.getAPI().getDataFolder();              
-        
-        if (!f.exists()) {
-            f.mkdir();
-        }
-        File[] listFiles = f.listFiles();
-        for(File fi : listFiles) {
-            fi.delete();
-        }
-
         for (int i = 0; i < chests.size(); i++) {
             try {
                 for (String cName : chests.keySet()) {
                     Inventory inv = getChest(cName);
-
+                    
                     File chestFile = new File(saveFolderChests, cName + ".chest");
                     if (chestFile.exists()) {
                         chestFile.delete();
@@ -224,6 +214,33 @@ public class VCManager {
                     BufferedWriter bw = new BufferedWriter(new FileWriter(chestFile));
 
                     for (ItemStack stack:inv.getContents()) {
+                        if (stack != null) {
+                            bw.write(stack.getTypeId() + ":" + stack.getAmount() + ":" + stack.getDurability() + "\r\n");
+                        } else {
+                            bw.write("0:0:0\r\n");
+                        }
+                    }
+
+                    bw.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (int i = 0; i < invs.size(); i++) {
+            try {
+                for (String cName : invs.keySet()) {
+                    ItemStack[] inv = invs.get(cName);
+                    
+                    File invFile = new File(saveFolderInvs, cName + ".chest");
+                    if (invFile.exists()) {
+                        invFile.delete();
+                    }
+                    invFile.createNewFile();
+
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(invFile));
+
+                    for (ItemStack stack:inv) {
                         if (stack != null) {
                             bw.write(stack.getTypeId() + ":" + stack.getAmount() + ":" + stack.getDurability() + "\r\n");
                         } else {
