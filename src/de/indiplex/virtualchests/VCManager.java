@@ -209,17 +209,13 @@ public class VCManager {
         for(File fi : listFiles) {
             fi.delete();
         }
-        
-        File folder = new File(f, "Chests");
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
+
         for (int i = 0; i < chests.size(); i++) {
             try {
                 for (String cName : chests.keySet()) {
                     Inventory inv = getChest(cName);
 
-                    File chestFile = new File(folder, cName + ".chest");
+                    File chestFile = new File(saveFolderChests, cName + ".chest");
                     if (chestFile.exists()) {
                         chestFile.delete();
                     }
