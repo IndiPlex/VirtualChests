@@ -232,7 +232,7 @@ public class VCManager {
                 for (String cName : invs.keySet()) {
                     ItemStack[] inv = invs.get(cName);
                     
-                    File invFile = new File(saveFolderInvs, cName + ".chest");
+                    File invFile = new File(saveFolderInvs, cName + ".inv");
                     if (invFile.exists()) {
                         invFile.delete();
                     }

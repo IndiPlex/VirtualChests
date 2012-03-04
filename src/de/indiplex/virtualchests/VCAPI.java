@@ -18,8 +18,6 @@
 package de.indiplex.virtualchests;
 
 import de.indiplex.manager.API;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -77,21 +75,17 @@ public class VCAPI implements API {
         return true;
     }
     
-    public static void showChest(Player player, Inventory inv) {
-        CraftPlayer cp = (CraftPlayer) player;
-        CraftInventory ci = (CraftInventory) inv;
-        cp.getHandle().a(ci.getInventory());
-    }
-    
-    public boolean showChest(Player player, String id) {
-        CraftPlayer cp = (CraftPlayer) player;
-        Inventory inv = getChest(id);
+    public static boolean showChest(Player player, Inventory inv) {
         if (inv==null) {
             return false;
         }
-        CraftInventory ci = (CraftInventory) inv;
-        cp.getHandle().a(ci.getInventory());
+        player.openInventory(inv);
         return true;
+    }
+    
+    public boolean showChest(Player player, String id) {
+        Inventory inv = getChest(id);
+        return showChest(player, inv);
     }
     
 }
